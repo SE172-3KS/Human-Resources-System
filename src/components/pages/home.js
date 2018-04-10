@@ -9,7 +9,7 @@ export default class extends Component {
   }
 
   componentWillMount() {
-    fetch('/api/home').then(response => {
+    fetch('/api/listEmployees').then(response => {
       return response.json()
     }).then(result => {
       this.setState({message: result.message})
@@ -19,7 +19,7 @@ export default class extends Component {
   render() {
     return (
       <div>
-        <h1>Homepage</h1>
+        <h1>Statistics</h1>
         <p>{this.state.message}</p>
       </div>
     );

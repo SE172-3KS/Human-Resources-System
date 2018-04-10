@@ -8,8 +8,8 @@ class Layout extends Component {
     this.state = {
       routes: [
         {
-          name: 'Another Link',
-          path: '/another-page'
+          name: 'Employees',
+          path: '/employees'
         }
       ]
     };
