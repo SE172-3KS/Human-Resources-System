@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import HttpService from '../../services/http.service'
+
+let httpService = new HttpService();
 
 export default class extends Component {
   constructor(props) {
@@ -9,77 +12,57 @@ export default class extends Component {
   }
 
   componentWillMount() {
-    fetch('/api/listEmployees').then(response => {
-      return response.json()
+    httpService.get({
+      url: '/api/listEmployees'
     }).then(result => {
       this.setState({message: result.message})
-    });
+    })
   }
 
   getEmployee(id) {
-    fetch('/api/getEmployee', {
-      body: JSON.stringify({
+    httpService.post({
+      url: '/api/getEmployee',
+      body: {
         id: id
-      }),
-      headers: {
-        'content-type': 'application/json'
-      },
-      method: 'POST'
-    }).then(response => {
-      return response.json();
+      }
     }).then(result => {
-      this.setState({message: result.message});
+      this.setState({message: result.message})
     })
   }
 
   createEmployee() {
-    fetch('/api/createEmployee', {
-      body: JSON.stringify({
+    httpService.post({
+      url: '/api/createEmployee',
+      body: {
         firstName: 'Seling',
         lastName: 'Chen'
-      }),
-      headers: {
-        'content-type': 'application/json'
-      },
-      method: 'POST'
-    }).then(response => {
-      return response.json();
+      }
     }).then(result => {
-      this.setState({message: result.message});
+      this.setState({message: result.message})
     })
   }
 
   updateEmployee() {
-    fetch('/api/updateEmployee', {
-      body: JSON.stringify({
+    httpService.post({
+      url: '/api/updateEmployee',
+      body: {
         id: 6,
         firstName: 'Seling2',
         lastName: 'Chen2'
-      }),
-      headers: {
-        'content-type': 'application/json'
-      },
-      method: 'POST'
-    }).then(response => {
-      return response.json();
+      }
     }).then(result => {
-      this.setState({message: result.message});
+      this.setState({message: result.message})
     })
   }
 
   deleteEmployee() {
-    fetch('/api/deleteEmployee', {
-      body: JSON.stringify({
+    httpService.post({
+      url: '/api/deleteEmployee',
+      body: {
         id: 6
-      }),
-      headers: {
-        'content-type': 'application/json'
-      },
-      method: 'POST'
-    }).then(response => {
-      return response.json();
+      }
     }).then(result => {
-      this.setState({message: result.message});
+      this.setState({message: result.message})
     })
   }
 
