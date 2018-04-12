@@ -11,10 +11,10 @@
 ### Database
 1. Unzip db/test_db-master
 2. Cd into test_db-master
-3. Load data into MySQL using the cmd:
+3. Load data into MySQL using the cmd:<br>
 		mysql -t < employees.sql <br> 
 	 or mysql -r root -p -t < employees.sql (depends on how you setup ur mysql) <br>
-4. To verify the data is there and correct, run:
+4. To verify the data is there and correct, run:<br>
 		time mysql -t < test_employees_sha.sql<br>
 		time mysql -t < test_employees_md5.sql<br>
-	Status should return all 'OK', removes the unzipped folder when you're done
+	Status should return all 'OK', removes the unzipped folder when you're done<br>
