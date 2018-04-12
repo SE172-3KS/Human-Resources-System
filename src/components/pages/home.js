@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import HttpService from '../../services/http.service'
+
+let httpService = new HttpService();
 
 export default class extends Component {
   constructor(props) {
@@ -9,11 +12,11 @@ export default class extends Component {
   }
 
   componentWillMount() {
-    fetch('/api/listEmployees').then(response => {
-      return response.json()
+    httpService.get({
+      url: '/api/listEmployees'
     }).then(result => {
       this.setState({message: result.message})
-    });
+    })
   }
 
   render() {
