@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router';
 
 export default class extends Component {
   constructor(props) {
@@ -21,6 +22,7 @@ export default class extends Component {
       <div>
         <h1>Statistics</h1>
         <p>{this.state.message}</p>
+        <li><Link to="login">Login</Link></li>
       </div>
     );
   }
