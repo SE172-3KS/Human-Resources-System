@@ -18,3 +18,8 @@
 		time mysql -t < test_employees_sha.sql<br>
 		time mysql -t < test_employees_md5.sql<br>
 	Status should return all 'OK', removes the unzipped folder when you're done<br>
+
+### Database user
+1. Edit server.js to input your own MySQL username and password or create a new user as followed
+2. Create user: CREATE USER '3ks'@'localhost' IDENTIFIED BY '123456';
+3. Grant access: GRANT ALL PRIVILEGES ON employees.* TO '3ks'@'localhost' WITH GRANT OPTION;
