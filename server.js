@@ -1,6 +1,10 @@
 let express = require('express');
 let path = require('path');
 let bodyParser = require('body-parser');
+
+let fs = require('fs');
+let https = require('https');
+
 let app = express();
 let PORT = process.env.PORT || 3000;
 let mysql = require('mysql');
@@ -93,10 +97,18 @@ app.get('*', function(request, response){
 	response.sendFile(__dirname + '/build/index.html');
 });
 
+/*
 app.listen(PORT, function(error){
 	if(error){
 		console.log(error);
 	}else{
 		console.log("==> Listening on port %s. Visit http://localhost:%s in your browser.", PORT, PORT);
 	}	
-});
+});*/
+
+let server = https.createServer({
+  key: fs.readFileSync('keys/key.pem'),
+  cert: fs.readFileSync('keys/cert.pem'),
+  passphrase: '123456'
+}, app);
+server.listen(PORT);
