@@ -4,6 +4,7 @@ let bodyParser = require('body-parser');
 let app = express();
 let PORT = process.env.PORT || 3000;
 let mysql = require('mysql');
+let paypal = require('paypal-rest-sdk');
 
 if(process.env.NODE_ENV !== 'production') {
   let webpackDevMiddleware = require('webpack-dev-middleware');
@@ -91,6 +92,54 @@ app.post('/api/deleteEmployee', (request, response) => {
 
 app.get('*', function(request, response){
 	response.sendFile(__dirname + '/build/index.html');
+});
+
+//paypal
+paypal.configure({
+  mode: 'sandbox', // Sandbox or live
+  client_id: 'Ad16r3v7NeiMH04zON99RzZE5LAYeigawfZ_1D6yQZE09NfdcwM9fJ6qY4AiSbRb-N1P77TazQiCDwYL',
+  client_secret: 'EOUz8SLT3tE2tT8RGLTYewBT_h_XWGk9WOMWPfCezFO_IBeLiqBzDQbwbBDl6NkGihKeidtDXOnpbnHR'
+});
+
+var sender_batch_id = Math.random().toString(36).substring(9);
+
+var create_payout_json = {
+    "sender_batch_header": {
+        "sender_batch_id": sender_batch_id,
+        "email_subject": "You have a payment"
+    },
+    "items": [
+        {
+            "recipient_type": "EMAIL",
+            "amount": {
+                "value": 0.01,
+                "currency": "USD"
+            },
+            "receiver": "shirt-supplier-one@mail.com",
+            "note": "Thank you.",
+            "sender_item_id": "item_1"
+        },
+        {
+            "recipient_type": "EMAIL",
+            "amount": {
+                "value": 0.01,
+                "currency": "USD"
+            },
+            "receiver": "shirt-supplier-two@mail.com",
+            "note": "Thank you.",
+            "sender_item_id": "item_2"
+        }
+    ]
+};
+
+paypal.payout.create(create_payout_json, function (error, payout) {
+    if (error) {
+        console.log(error.response);
+        throw error;
+    } else {
+        console.log("Create Payout Response");
+        console.log(payout);
+    }
 });
 
 app.listen(PORT, function(error){
