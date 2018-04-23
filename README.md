@@ -23,3 +23,5 @@
 1. Edit server.js to input your own MySQL username and password or create a new user as followed
 2. Create user: CREATE USER '3ks'@'localhost' IDENTIFIED BY '123456';
 3. Grant access: GRANT ALL PRIVILEGES ON employees.* TO '3ks'@'localhost' WITH GRANT OPTION;
+
+test change
