@@ -6,6 +6,7 @@ import Home from './components/pages/home.js';
 import Layout from './components/pages/layout.js';
 import Employees from './components/pages/employees.js';
 import Login from './components/auth/login';
+import Payment from './components/pages/payment.js';
 
 ReactDOM.render(
   <Router history={browserHistory}>
@@ -13,6 +14,7 @@ ReactDOM.render(
       <IndexRoute component={Home}/>
       <Route path="/login" component={Login}/>
       <Route path="/employees" component={Employees}/>
+      <Route path="/payout" component={Payment}/>
     </Route>
   </Router>,
   document.getElementById('root')

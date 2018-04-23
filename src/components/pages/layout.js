@@ -10,6 +10,10 @@ class Layout extends Component {
         {
           name: 'Employees',
           path: '/employees'
+        },
+        {
+          name: 'Payout',
+          path: '/payout'
         }
       ]
     };
