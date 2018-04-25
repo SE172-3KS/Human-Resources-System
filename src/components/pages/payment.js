@@ -1,53 +1,53 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import HttpService from '../../services/http.service'
+import HttpService from '../../services/http.service';
+import PaypalService from '../../services/paypal.service';
+
 
 let httpService = new HttpService();
+let paypalService = new PaypalService();
 
 export default class extends Component {
   constructor(props) {
     super(props);
     this.state = {
       message: "Payout page",
-
+      payout: null
     };
-  }
-
-  componentWillMount() {
-   
   }
 
   sendPayout(){
-    var sender_batch_id = Math.random().toString(36).substring(9);
-    console.log(sender_batch_id);
-    var create_payout_json = {
-        "sender_batch_header": {
-            "sender_batch_id": sender_batch_id,
-            "email_subject": "You have a payment"
-        },
-        "items": [
-            {
-                "recipient_type": "EMAIL",
-                "amount": {
-                    "value": 0.01,
-                    "currency": "USD"
-                },
-                "receiver": "shirt-supplier-one@mail.com",
-                "note": "Thank you.",
-                "sender_item_id": "item_1"
-            },
-            {
-                "recipient_type": "EMAIL",
-                "amount": {
-                    "value": 0.01,
-                    "currency": "USD"
-                },
-                "receiver": "shirt-supplier-two@mail.com",
-                "note": "Thank you.",
-                "sender_item_id": "item_2"
-            }
-        ]
-    };
+    var receipients = [
+    { 
+      value: 0,
+      receiver: "3ks-test-one@gmail.com"
+    },{
+      value: 0,
+      receiver: "3ks-test-two@gmail.com"
+    }];
+    var create_payout_json = paypalService.createBatchPayout(receipients);
+
+    httpService.post({
+      url: '/api/makePayout',
+      body: {
+        create_payout: create_payout_json
+      }
+    }).then(result => {
+      this.setState({message: result.message});
+    });
+  }
+
+  getPayoutDetail(id){
+    httpService.post({
+      url: '/api/getPayout',
+      body: {
+        id: id
+      }
+    }).then(result => {
+      if(result.message === "Success")
+        var payout = paypalService.extractPayoutResult(result.payout);
+       // this.setState({payout: payout});
+    });
   }
 
   render() {
@@ -56,6 +56,7 @@ export default class extends Component {
         <h1>Payout Test</h1>
         <p>{this.state.message}</p>
         <button onClick={this.sendPayout.bind(this)}>Send test payout</button>
+        <button onClick={this.getPayoutDetail.bind(this, '3AY8Q6XBVM37G')}>Get test payout</button>
       </div>
     );
   }
