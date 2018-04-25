@@ -4,6 +4,7 @@ let bodyParser = require('body-parser');
 let app = express();
 let PORT = process.env.PORT || 3000;
 let mysql = require('mysql');
+let paypal = require('paypal-rest-sdk');
 
 if(process.env.NODE_ENV !== 'production') {
   let webpackDevMiddleware = require('webpack-dev-middleware');
@@ -19,6 +20,13 @@ if(process.env.NODE_ENV !== 'production') {
 }
 
 app.use(express.static(path.join(__dirname, 'build')));
+
+//paypal
+paypal.configure({
+  mode: 'sandbox', // Sandbox or live
+  client_id: 'Ad16r3v7NeiMH04zON99RzZE5LAYeigawfZ_1D6yQZE09NfdcwM9fJ6qY4AiSbRb-N1P77TazQiCDwYL',
+  client_secret: 'EOUz8SLT3tE2tT8RGLTYewBT_h_XWGk9WOMWPfCezFO_IBeLiqBzDQbwbBDl6NkGihKeidtDXOnpbnHR'
+});
 
 //mysql connection
 var connection = mysql.createConnection({
