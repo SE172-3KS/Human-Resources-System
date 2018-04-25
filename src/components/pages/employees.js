@@ -107,7 +107,7 @@ export default class extends Component {
           <label>New First Name:</label>
           <input type="text" name="newName" values={this.state.newName} onChange={this.handleInputChange.bind(this)}></input>
         </div>
-      
+
         <button onClick={this.getEmployee.bind(this)}>Get Employee (emp_no)</button>
         <button onClick={this.createEmployee.bind(this)}>Create Employee</button>
         <button onClick={this.updateEmployee.bind(this)}>Update Employee</button>
@@ -135,7 +135,7 @@ export default class extends Component {
             {this.state.message.map((row) =>
               <tr key={row.emp_no}>
                 <td>{row.emp_no}</td>
-                <td>{row.birth_date}</td> 
+                <td>{row.birth_date}</td>
                 <td>{row.first_name}</td>
                 <td>{row.last_name}</td>
                 <td>{row.gender}</td>

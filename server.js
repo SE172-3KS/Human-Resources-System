@@ -8,6 +8,7 @@ let https = require('https');
 let app = express();
 let PORT = process.env.PORT || 3000;
 let mysql = require('mysql');
+let paypal = require('paypal-rest-sdk');
 
 if(process.env.NODE_ENV !== 'production') {
   let webpackDevMiddleware = require('webpack-dev-middleware');
@@ -23,6 +24,13 @@ if(process.env.NODE_ENV !== 'production') {
 }
 
 app.use(express.static(path.join(__dirname, 'build')));
+
+//paypal
+paypal.configure({
+  mode: 'sandbox', // Sandbox or live
+  client_id: 'Ad16r3v7NeiMH04zON99RzZE5LAYeigawfZ_1D6yQZE09NfdcwM9fJ6qY4AiSbRb-N1P77TazQiCDwYL',
+  client_secret: 'EOUz8SLT3tE2tT8RGLTYewBT_h_XWGk9WOMWPfCezFO_IBeLiqBzDQbwbBDl6NkGihKeidtDXOnpbnHR'
+});
 
 //mysql connection
 var connection = mysql.createConnection({
@@ -93,18 +101,48 @@ app.post('/api/deleteEmployee', (request, response) => {
     response.json({result: "Can't delete for some reason"});
 });
 
-app.get('*', function(request, response){
-	response.sendFile(__dirname + '/build/index.html');
+//paypal payout
+app.post('/api/makePayout', (request, response)=> {
+  var create_payout = request.body.create_payout;
+  
+  paypal.payout.create(create_payout, (error, payout) => {
+    if (error) {
+        console.log(error.response);
+        response.json({message: "Payout error"});
+    } else {
+        var payout_batch_id = payout.batch_header.payout_batch_id;
+        var date = new Date();
+        var day = date.getDate();
+        var year = date.getFullYear();
+        var month = date.getMonth()+1;
+        var dateInput = year+"-"+month+"-"+day;
+
+        let query = "insert into payouts values ('"+payout_batch_id+"', '"+dateInput+"');"; 
+        console.log(query);
+        connection.query(query, (err, rows, fields)=> {
+          if (err) throw err
+        });
+
+        response.json({message: "Payout batch id " + payout_batch_id});
+    }
+  });
 });
 
-/*
-app.listen(PORT, function(error){
-	if(error){
-		console.log(error);
-	}else{
-		console.log("==> Listening on port %s. Visit http://localhost:%s in your browser.", PORT, PORT);
-	}	
-});*/
+app.post('/api/getPayout', (request, response) => {
+  var payoutId = request.body.id;
+  paypal.payout.get(payoutId, (error, payout) => {
+    if(error){
+      console.log(error);
+      response.json({message: "Error"});
+    }else{
+      response.json({message: "Success", payout: payout});
+    }
+  });
+});
+
+app.get('*', function(request, response){
+  response.sendFile(__dirname + '/build/index.html');
+});
 
 let server = https.createServer({
   key: fs.readFileSync('keys/key.pem'),
