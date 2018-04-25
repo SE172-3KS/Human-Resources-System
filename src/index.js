@@ -8,11 +8,9 @@ import Home from './components/pages/home.js';
 import Layout from './components/pages/layout.js';
 import Employees from './components/pages/employees.js';
 import Login from './components/auth/login';
-<<<<<<< HEAD
 import Gender from './components/pages/gender.js';
-=======
 import Payment from './components/pages/payment.js';
->>>>>>> paypal
+
 
 ReactDOM.render(
   <Router history={browserHistory}>
