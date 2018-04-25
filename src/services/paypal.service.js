@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 export default class PaypalService {
     constructor(){}
 
