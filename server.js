@@ -99,7 +99,6 @@ app.post('/api/deleteEmployee', (request, response) => {
 
 //paypal payout
 app.post('/api/makePayout', (request, response)=> {
-  var id = request.body.id;
   var create_payout = request.body.create_payout;
   
   paypal.payout.create(create_payout, (error, payout) => {

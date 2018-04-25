@@ -17,40 +17,19 @@ export default class extends Component {
   }
 
   sendPayout(){
-    var sender_batch_id = Math.random().toString(36).substring(9);
-    var create_payout_json = {
-        "sender_batch_header": {
-            "sender_batch_id": sender_batch_id,
-            "email_subject": "You have a payment"
-        },
-        "items": [
-            {
-                "recipient_type": "EMAIL",
-                "amount": {
-                    "value": 0,
-                    "currency": "USD"
-                },
-                "receiver": "3ks-test-one@mail.com",
-                "note": "Thank you.",
-                "sender_item_id": "item_1"
-            },
-            {
-                "recipient_type": "EMAIL",
-                "amount": {
-                    "value": 0,
-                    "currency": "USD"
-                },
-                "receiver": "3ks-test-two@mail.com",
-                "note": "Thank you.",
-                "sender_item_id": "item_2"
-            }
-        ]
-    };
+    var receipients = [
+    { 
+      value: 0,
+      receiver: "3ks-test-one@gmail.com"
+    },{
+      value: 0,
+      receiver: "3ks-test-two@gmail.com"
+    }];
+    var create_payout_json = paypalService.createBatchPayout(receipients);
 
     httpService.post({
       url: '/api/makePayout',
       body: {
-        id: sender_batch_id,
         create_payout: create_payout_json
       }
     }).then(result => {
