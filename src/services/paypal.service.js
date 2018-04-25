@@ -1,3 +1,38 @@
+export default class PaypalService {
+    constructor(){}
+
+    createBatchPayout(receipients){
+        var sender_batch_id = Math.random().toString(36).substring(9);
+        var items = []
+        for(int i = 0; i < receipients.length; i++){
+            items.push(
+                {"recipient_type": "EMAIL",
+                 "amount": {
+                     "value": receipients.amount,
+                     "currency": "USD"
+                 },
+                 "receiver": receipients.email,
+                 "note": "Payment sent",
+                 "sender_item_id": "Receiver "+i
+                });
+        }
+        var create_payout_json = {
+            "sender_batch_header": {
+                "sender_batch_id": sender_batch_id,
+                "email_subject": "You have a payment"
+            },
+            items
+        }
+        console.log(JSON.stringify(create_payout_json));
+    }
+}
+
+
+
+
+
+
+
 /*
 var sender_batch_id = Math.random().toString(36).substring(9);
 

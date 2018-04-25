@@ -97,6 +97,47 @@ app.post('/api/deleteEmployee', (request, response) => {
     response.json({result: "Can't delete for some reason"});
 });
 
+//paypal payout
+app.post('/api/makePayout', (request, response)=> {
+  var id = request.body.id;
+  var create_payout = request.body.create_payout;
+  
+  paypal.payout.create(create_payout, (error, payout) => {
+    if (error) {
+        console.log(error.response);
+        response.json({message: "Payout error"});
+    } else {
+        var payout_batch_id = payout.batch_header.payout_batch_id;
+        var date = new Date();
+        var day = date.getDate();
+        var year = date.getFullYear();
+        var month = date.getMonth()+1;
+        var dateInput = year+"-"+month+"-"+day;
+
+        let query = "insert into payouts values ('"+payout_batch_id+"', '"+dateInput+"');"; 
+        console.log(query);
+        connection.query(query, (err, rows, fields)=> {
+          if (err) throw err
+        });
+
+        response.json({message: "Payout batch id " + payout_batch_id});
+    }
+  });
+});
+
+app.post('/api/getPayout', (request, response) => {
+  var payoutId = request.body.id;
+  paypal.payout.get(payoutId, (error, payout) => {
+    if(error){
+      console.log(error);
+      response.json({message: "Get payout error"});
+    }else{
+      console.log("Get Payout Response");
+      console.log(JSON.stringify(payout));
+    }
+  });
+});
+
 app.get('*', function(request, response){
 	response.sendFile(__dirname + '/build/index.html');
 });
