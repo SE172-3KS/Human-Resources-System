@@ -11,7 +11,7 @@ if(process.env.NODE_ENV !== 'production') {
   let webpack = require('webpack');
   let config = require('./webpack.config');
   let compiler = webpack(config);
-  
+
   app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
   app.use(webpackHotMiddleware(compiler));
   app.use(bodyParser.json());
@@ -49,7 +49,7 @@ app.post('/api/createEmployee', (request, response) => {
   let lastName = request.body.lastName;
   let emp_no = request.body.emp_no;
 
-  var query = "insert into employees " + 
+  var query = "insert into employees " +
               "values (" + emp_no + ",'1994-02-10', '" + firstName +"', '"+lastName +
               "', 'M', '2018-02-10');";
 
@@ -76,27 +76,31 @@ app.post('/api/updateEmployee', (request, response) => {
 
 app.post('/api/deleteEmployee', (request, response) => {
   let emp_no = request.body.emp_no;
-  
+
   if(emp_no){
     var query = "delete from employees where emp_no = " + emp_no + ";";
-    
+
     connection.query(query, (err, rows, fields)=> {
       if (err) throw err
       response.json({result: "Employee with id "+emp_no + " was deleted. Refresh to see it gone" });
     });
-    
-  }else 
+
+  }else
     response.json({result: "Can't delete for some reason"});
 });
 
+
 app.get('*', function(request, response){
 	response.sendFile(__dirname + '/build/index.html');
+
 });
+
+
 
 app.listen(PORT, function(error){
 	if(error){
 		console.log(error);
 	}else{
 		console.log("==> Listening on port %s. Visit http://localhost:%s in your browser.", PORT, PORT);
-	}	
+	}
 });
