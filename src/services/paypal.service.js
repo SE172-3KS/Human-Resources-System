@@ -1,6 +1,7 @@
 export default class PaypalService {
     constructor(){}
 
+    //create a payout object base on given {receiver,value} array
     createBatchPayout(receipients){
         var sender_batch_id = Math.random().toString(36).substring(9);
         var items = []
@@ -26,15 +27,35 @@ export default class PaypalService {
         console.log(JSON.stringify(create_payout_json));
         return create_payout_json;
     }
+
+    //extract relevant information from api's payout detail result
+    extractPayoutResult(payout){
+        var result = {};
+       // console.log(JSON.stringify(payout.items));
+        result['batch_id'] = payout.batch_header.payout_batch_id;
+        result['status'] = payout.batch_header.batch_status;
+        result['time_created'] = payout.batch_header.time_created;
+        result['time_completed'] = payout.batch_header.time_completed;
+        result['amount'] = payout.batch_header.amount.value;
+        result['fees'] = payout.batch_header.fees.value;
+        let items = payout.items;
+        var transactions = [];
+        for(var i = 0; i < items.length; i++){
+            transactions.push({
+                trans_id: items[i].payout_item_id,
+                fee: items[i].payout_item_fee.value,
+                amount: items[i].payout_item.amount.value,
+                receiver: items[i].payout_item.receiver 
+            });
+        }
+        result['transactions'] = transactions;
+       
+        console.log(JSON.stringify(result));
+        return result;
+    }
 }
 
-
-
-
-
-
-
-/*
+/* Sample payout code
 var sender_batch_id = Math.random().toString(36).substring(9);
 
 var create_payout_json = {

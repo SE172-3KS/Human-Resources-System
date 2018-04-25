@@ -129,10 +129,9 @@ app.post('/api/getPayout', (request, response) => {
   paypal.payout.get(payoutId, (error, payout) => {
     if(error){
       console.log(error);
-      response.json({message: "Get payout error"});
+      response.json({message: "Error"});
     }else{
-      console.log("Get Payout Response");
-      console.log(JSON.stringify(payout));
+      response.json({message: "Success", payout: payout});
     }
   });
 });

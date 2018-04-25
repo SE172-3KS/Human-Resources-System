@@ -12,7 +12,7 @@ export default class extends Component {
     super(props);
     this.state = {
       message: "Payout page",
-
+      payout: null
     };
   }
 
@@ -37,14 +37,16 @@ export default class extends Component {
     });
   }
 
-  getPayout(id){
+  getPayoutDetail(id){
     httpService.post({
       url: '/api/getPayout',
       body: {
         id: id
       }
     }).then(result => {
-      this.setState({message: result.message});
+      if(result.message === "Success")
+        var payout = paypalService.extractPayoutResult(result.payout);
+       // this.setState({payout: payout});
     });
   }
 
@@ -54,7 +56,7 @@ export default class extends Component {
         <h1>Payout Test</h1>
         <p>{this.state.message}</p>
         <button onClick={this.sendPayout.bind(this)}>Send test payout</button>
-        <button onClick={this.getPayout.bind(this, '3AY8Q6XBVM37G')}>Get test payout</button>
+        <button onClick={this.getPayoutDetail.bind(this, '3AY8Q6XBVM37G')}>Get test payout</button>
       </div>
     );
   }
