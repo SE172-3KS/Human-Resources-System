@@ -49,16 +49,17 @@ app.post('/api/getEmployee', (request, response) => {
   connection.query('select * from employees where emp_no = ' + id + ';', (err, rows, fields)=> {
     if (err) throw err
     var generalInfo = rows[0];
-    connection.query('select * dept_no from dept_emp where emp_no = '+id + ';', (err, rows, fields) =>{
-
+    connection.query('select * from employee_info where emp_no = '+id + ';', (err, rows, fields) =>{
+      if(err) throw err
+      var moreInfo = rows[rows.length-1];
+      var info = Object.assign({}, generalInfo, moreInfo);
+      response.json({message: info});
     });
   });
 });
 
 app.post('/api/createEmployee', (request, response) => {
-  let firstName = request.body.firstName;
-  let lastName = request.body.lastName;
-  let emp_no = request.body.emp_no;
+  let employees = request.body.employee;
 
   var query = "insert into employees " + 
               "values (" + emp_no + ",'1994-02-10', '" + firstName +"', '"+lastName +
