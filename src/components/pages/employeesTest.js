@@ -18,6 +18,7 @@ export default class extends Component {
     this.openNewEmployeeForm = this.openNewEmployeeForm.bind(this);
     this.handleEmpInputChange = this.handleEmpInputChange.bind(this);
     this.createEmployee = this.createEmployee.bind(this);
+    this.deleteEmployee = this.deleteEmployee.bind(this);
   }
 
   handleInputChange(event) {
@@ -101,6 +102,18 @@ export default class extends Component {
     })
   }
 
+  deleteEmployee(){
+    var id = this.state.id;
+    httpService.post({
+      url: '/api/deleteEmployee',
+      body: {
+        emp_no: id
+      }
+    }).then(result => {
+      this.setState({message: null});
+    })
+  }
+
   openNewEmployeeForm(){
     this.setState({newEmployee: true, message: null});
   }
@@ -111,7 +124,7 @@ export default class extends Component {
     var EmployeeInfo = 
     (
       <div>
-          <h3>Employee information</h3>
+          <h3>Employee information <i className="fas fa-trash-alt" onClick={this.deleteEmployee}></i></h3>
           <h3>General</h3>
           <div>
             <p>Name: {this.state.message ? this.state.message.first_name + " " + this.state.message.last_name: ""}</p>

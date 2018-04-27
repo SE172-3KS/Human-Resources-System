@@ -107,12 +107,14 @@ app.post('/api/deleteEmployee', (request, response) => {
   
   if(emp_no){
     var query = "delete from employees where emp_no = " + emp_no + ";";
-    
-    connection.query(query, (err, rows, fields)=> {
-      if (err) throw err
-      response.json({result: "Employee with id "+emp_no + " was deleted. Refresh to see it gone" });
-    });
-    
+    connection.query(query);
+    query = "delete from salaries where emp_no = " + emp_no + ";";
+    connection.query(query);
+    query = "delete from titles where emp_no = " + emp_no + ";";
+    connection.query(query);
+    query = "delete from dept_emp where emp_no = " + emp_no + ";";
+    connection.query(query);
+    response.json({result: "Done deleting"});
   }else 
     response.json({result: "Can't delete for some reason"});
 });
