@@ -4,8 +4,8 @@ export default class Employee{
 		this.last_name = last;
 		this.emp_no = empNo;
 		this.gender = gender;
-		this.birth_date = toSQLFormatDate(dob);
-		this.hire_date = toSQLFormatDate(hiredate);
+		this.birth_date = this.toSQLFormatDate(dob);
+		this.hire_date = this.toSQLFormatDate(hiredate);
 		this.title = title;
 		this.dept_no = deptno;
 		this.salary = salary;

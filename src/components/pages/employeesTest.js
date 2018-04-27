@@ -73,6 +73,7 @@ export default class extends Component {
 
   createEmployee(){
     var employee = this.state.employee;
+    this.setState({id: employee.emp_no});
     console.log(JSON.stringify(employee));
     httpService.post({
       url: '/api/createEmployee',
@@ -80,7 +81,9 @@ export default class extends Component {
         employee: employee
       }
     }).then(result => {
-      this.setState({message: result.message})
+     this.setState({
+        message: result.message
+      })
     })
   }
 
@@ -94,7 +97,7 @@ export default class extends Component {
       }
     }).then(result => {
       console.log(JSON.stringify(result.message));
-      this.setState({message: result.message})
+      this.setState({message: result.message, newEmployee: false})
     })
   }
 
@@ -128,6 +131,13 @@ export default class extends Component {
     var NewEmployeeForm = (
         <div className="form">
           <div className="form-group">
+            <label>Employee Number</label>
+            <input type="number" className="form-control" placeholder="Employee Number"
+                    name = "emp_no"
+                    values={this.state.employee.emp_no}
+                    onChange={this.handleEmpInputChange}/>
+          </div>
+          <div className="form-group">
             <label>First Name</label>
             <input type="text" className="form-control" placeholder="First Name"
                     name = "first_name"
@@ -144,7 +154,7 @@ export default class extends Component {
           <div className="form-group">
             <label>Gender</label>
             <input type="text" className="form-control" placeholder="Gender"
-                    name = "Gender"
+                    name = "gender"
                     values={this.state.employee.gender}
                     onChange={this.handleEmpInputChange}/>
           </div>
@@ -186,6 +196,8 @@ export default class extends Component {
           <div className="form-group">
            <button className="btn btn-primary btn-block" onClick={this.createEmployee}>Create</button>
           </div>
+          <p>New employee with id = {this.state.employee.emp_no} created</p>
+          <p onClick={this.getEmployee}>--> View</p>
         </div>
     )
 

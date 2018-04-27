@@ -59,19 +59,35 @@ app.post('/api/getEmployee', (request, response) => {
 });
 
 app.post('/api/createEmployee', (request, response) => {
-  let employees = request.body.employee;
+  let emp = request.body.employee;
 
-  var query = "insert into employees " + 
-              "values (" + emp_no + ",'1994-02-10', '" + firstName +"', '"+lastName +
-              "', 'M', '2018-02-10');";
-
-  connection.query(query, (err, rows, fields)=> {
-    if (err) throw err
-    connection.query("Select * from employees where emp_no = " + emp_no + ";", (err, rows, fields)=> {
-      if (err) throw err
-      response.json({ message: rows});
-    });
-  });
+  var query = "Insert into employees values ("
+                +emp.emp_no+", '"
+                +emp.dob+"','"
+                +emp.first_name+"','"
+                +emp.last_name+"','"
+                +emp.gender+"','"
+                +emp.hire_date+"');"
+  console.log(query);
+  connection.query(query);
+  query = "Insert into dept_emp values ("
+                  +emp.emp_no+", '"
+                  +emp.dept_no+"', '"
+                  +emp.hire_date+"','9999-01-01');"
+                  console.log(query);
+  connection.query(query);
+  query = "Insert into salaries values ("
+                  +emp.emp_no+", "
+                  +emp.salary+", '"
+                  +emp.hire_date+"','9999-01-01');"
+                  console.log(query);
+  connection.query(query);
+  query = "Insert into titles values ("
+                  +emp.emp_no+", '"
+                  +emp.title+"', '"
+                  +emp.hire_date+"','9999-01-01');"
+                  console.log(query);
+  connection.query(query);
 });
 
 app.post('/api/updateEmployee', (request, response) => {
