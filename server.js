@@ -48,7 +48,10 @@ app.post('/api/getEmployee', (request, response) => {
   let id = request.body.id;
   connection.query('select * from employees where emp_no = ' + id + ';', (err, rows, fields)=> {
     if (err) throw err
-    response.json({ message: rows });
+    var generalInfo = rows[0];
+    connection.query('select * dept_no from dept_emp where emp_no = '+id + ';', (err, rows, fields) =>{
+
+    });
   });
 });
 
