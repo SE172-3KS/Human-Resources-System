@@ -48,38 +48,75 @@ app.post('/api/getEmployee', (request, response) => {
   let id = request.body.id;
   connection.query('select * from employees where emp_no = ' + id + ';', (err, rows, fields)=> {
     if (err) throw err
-    response.json({ message: rows });
-  });
-});
-
-app.post('/api/createEmployee', (request, response) => {
-  let firstName = request.body.firstName;
-  let lastName = request.body.lastName;
-  let emp_no = request.body.emp_no;
-
-  var query = "insert into employees " + 
-              "values (" + emp_no + ",'1994-02-10', '" + firstName +"', '"+lastName +
-              "', 'M', '2018-02-10');";
-
-  connection.query(query, (err, rows, fields)=> {
-    if (err) throw err
-    connection.query("Select * from employees where emp_no = " + emp_no + ";", (err, rows, fields)=> {
-      if (err) throw err
-      response.json({ message: rows});
+    var generalInfo = rows[0];
+    connection.query('select * from employee_info where emp_no = '+id + ';', (err, rows, fields) =>{
+      if(err) throw err
+      var moreInfo = rows[rows.length-1];
+      var info = Object.assign({}, generalInfo, moreInfo);
+      response.json({message: info});
     });
   });
 });
 
+app.post('/api/createEmployee', (request, response) => {
+  let emp = request.body.employee;
+
+  var query = "Insert into employees values ("
+                +emp.emp_no+", '"
+                +emp.dob+"','"
+                +emp.first_name+"','"
+                +emp.last_name+"','"
+                +emp.gender+"','"
+                +emp.hire_date+"');"
+  console.log(query);
+  connection.query(query);
+  query = "Insert into dept_emp values ("
+                  +emp.emp_no+", '"
+                  +emp.dept_no+"', '"
+                  +emp.hire_date+"','9999-01-01');"
+                  console.log(query);
+  connection.query(query);
+  query = "Insert into salaries values ("
+                  +emp.emp_no+", "
+                  +emp.salary+", '"
+                  +emp.hire_date+"','9999-01-01');"
+                  console.log(query);
+  connection.query(query);
+  query = "Insert into titles values ("
+                  +emp.emp_no+", '"
+                  +emp.title+"', '"
+                  +emp.hire_date+"','9999-01-01');"
+                  console.log(query);
+  connection.query(query);
+});
+
 app.post('/api/updateEmployee', (request, response) => {
-  let emp_no = request.body.emp_no;
-  let first_name = request.body.first_name;
+  let emp = request.body.employee;
 
-  var query = "update employees set first_name = '"+ first_name + "' where emp_no = " + emp_no +";";
-
-  connection.query(query, (err, rows, fields)=> {
-    if (err) throw err
-    response.json({ result: 'Updating employee with emp_no' + emp_no + "Refresh to see change."});
-  });
+  var query = "Update employees set "
+                +"birth_date = '"+emp.birth_date+"',"
+                +"first_name = '"+emp.first_name+"',"
+                +"last_name = '"+emp.last_name+"',"
+                +"gender = '"+emp.gender+"',"
+                +"hire_date = '"+emp.hire_date+"' "
+                +"where emp_no = "+emp.emp_no;
+  console.log(query);
+  connection.query(query);
+  query = "Update dept_emp set "
+                  +"dept_no = '"+emp.dept_no+"' "
+                  +"where emp_no = "+emp.emp_no;
+                  console.log(query);
+  connection.query(query);
+  query = "Update salaries set "
+                  +"salary = "+emp.salary
+                  +" where emp_no = "+emp.emp_no;
+                  console.log(query);
+  connection.query(query);
+  query = "Update titles set "
+                  +"title = '"+emp.title+"' "
+                  +"where emp_no = "+emp.emp_no;
+                  console.log(query);
+  connection.query(query);
 });
 
 app.post('/api/deleteEmployee', (request, response) => {
@@ -87,12 +124,14 @@ app.post('/api/deleteEmployee', (request, response) => {
   
   if(emp_no){
     var query = "delete from employees where emp_no = " + emp_no + ";";
-    
-    connection.query(query, (err, rows, fields)=> {
-      if (err) throw err
-      response.json({result: "Employee with id "+emp_no + " was deleted. Refresh to see it gone" });
-    });
-    
+    connection.query(query);
+    query = "delete from salaries where emp_no = " + emp_no + ";";
+    connection.query(query);
+    query = "delete from titles where emp_no = " + emp_no + ";";
+    connection.query(query);
+    query = "delete from dept_emp where emp_no = " + emp_no + ";";
+    connection.query(query);
+    response.json({result: "Done deleting"});
   }else 
     response.json({result: "Can't delete for some reason"});
 });
