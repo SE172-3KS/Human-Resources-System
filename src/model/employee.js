@@ -16,6 +16,10 @@ export default class Employee{
         var day = date.getDate();
         var year = date.getFullYear();
         var month = date.getMonth()+1;
+
+        if(day <= 9) day = "0"+day;
+        if(month <= 9) month = "0"+month;
+
         return year+"-"+month+"-"+day;
 	}
 }

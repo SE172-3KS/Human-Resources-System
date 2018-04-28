@@ -91,15 +91,32 @@ app.post('/api/createEmployee', (request, response) => {
 });
 
 app.post('/api/updateEmployee', (request, response) => {
-  let emp_no = request.body.emp_no;
-  let first_name = request.body.first_name;
+  let emp = request.body.employee;
 
-  var query = "update employees set first_name = '"+ first_name + "' where emp_no = " + emp_no +";";
-
-  connection.query(query, (err, rows, fields)=> {
-    if (err) throw err
-    response.json({ result: 'Updating employee with emp_no' + emp_no + "Refresh to see change."});
-  });
+  var query = "Update employees set "
+                +"birth_date = '"+emp.birth_date+"',"
+                +"first_name = '"+emp.first_name+"',"
+                +"last_name = '"+emp.last_name+"',"
+                +"gender = '"+emp.gender+"',"
+                +"hire_date = '"+emp.hire_date+"' "
+                +"where emp_no = "+emp.emp_no;
+  console.log(query);
+  connection.query(query);
+  query = "Update dept_emp set "
+                  +"dept_no = '"+emp.dept_no+"' "
+                  +"where emp_no = "+emp.emp_no;
+                  console.log(query);
+  connection.query(query);
+  query = "Update salaries set "
+                  +"salary = "+emp.salary
+                  +" where emp_no = "+emp.emp_no;
+                  console.log(query);
+  connection.query(query);
+  query = "Update titles set "
+                  +"title = '"+emp.title+"' "
+                  +"where emp_no = "+emp.emp_no;
+                  console.log(query);
+  connection.query(query);
 });
 
 app.post('/api/deleteEmployee', (request, response) => {

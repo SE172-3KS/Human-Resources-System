@@ -1,0 +1,15 @@
+.link {
+	color: blue;
+}
+
+.box {
+	display: inline;
+	float: left;
+	width: 50%;
+}
+
+#searchBox {
+	width: 70%;
+	margin: auto;
+}
+
