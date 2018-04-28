@@ -155,107 +155,136 @@ export default class extends Component {
 
     var EmployeeInfo = 
     (
-      <div>
-          <div>
-            <h3>Employee information</h3>
-            <div className="dropdown">
-              <button className="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Action
-              </button>
-              <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <i className="fas fa-trash-alt" onClick={this.deleteEmployee}></i>
-                <i className="fas fa-pencil-alt" onClick={this.openNewEmployeeForm.bind(this,true)}></i>
-              </div>
-            </div>
+      <div className="searchBox">
+          <h4 id="title">Employee information</h4>
+          <div className="row">
+            <div className="col col-lg-2">Name:</div>
+            <div className="col">{this.state.message ? this.state.message.first_name + " " + this.state.message.last_name: ""}</div>
           </div>
-          <div className="box"> 
-            <h3>General</h3>
-            <div>
-              <p>Name: {this.state.message ? this.state.message.first_name + " " + this.state.message.last_name: ""}</p>
-              <p>Gender: {this.state.message ? this.state.message.gender : ""}</p>
-              <p>DOB: {this.state.message ? this.state.message.birth_date : ""}</p>
-              <p>Hire Date: {this.state.message ? this.state.message.hire_date : ""} </p>
-            </div>
+          <div className="row">
+            <div className="col col-lg-2">Gender:</div>
+            <div className="col">{this.state.message ? this.state.message.gender : ""}</div>
           </div>
-          <div className="box">
-            <h3>Company</h3>
-            <div>
-              <p>Title: {this.state.message ? this.state.message.title : ""}</p>
-              <p>Salary: {this.state.message ? this.state.message.salary : ""}</p>
-              <p>Department: {this.state.message ? this.state.message.dept_no : ""}</p>
-            </div>
+          <div className="row">
+            <div className="col col-lg-2">Date Of Birth:</div>
+            <div className="col">{this.state.message ? this.state.message.birth_date : ""}</div>
           </div>
+          <div className="row">
+            <div className="col col-lg-2">Title:</div>
+            <div className="col">{this.state.message ? this.state.message.title : ""}</div>
+          </div>
+          <div className="row">
+            <div className="col col-lg-2">Salary:</div>
+            <div className="col">{this.state.message ? this.state.message.salary : ""}</div>
+          </div>
+          <div className="row">
+            <div className="col col-lg-2">Department:</div>
+            <div className="col">{this.state.message ? this.state.message.dept_no : ""}</div>
+          </div>
+
+          <hr></hr>
+          
+          <button type="button" className="btn btn-info" 
+                  onClick={this.openNewEmployeeForm.bind(this,true)}>
+                  Update
+          </button>
+          <button type="button" 
+                  className="btn btn-danger" 
+                  onClick={this.deleteEmployee}>
+                  Delete
+          </button>
       </div>
     )
 
     var NewEmployeeForm = (
         <div className="form">
-          <div className="form-group">
-            <label>Employee Number</label>
-            <input type="number" className="form-control" placeholder="Employee Number"
-                    name = "emp_no"
-                    value={this.state.employee.emp_no}
-                    onChange={this.handleEmpInputChange}/>
+          <div className="form-row">
+            <div className="col-lg-3"><label>Employee Number</label></div>
+            <div className="col-lg-8">
+              <input type="number" className="form-control" placeholder="Employee Number"
+                      name = "emp_no"
+                      value={this.state.employee.emp_no}
+                      onChange={this.handleEmpInputChange}/>
+            </div>
           </div>
-          <div className="form-group">
-            <label>First Name</label>
-            <input type="text" className="form-control" placeholder="First Name"
-                    name = "first_name"
-                    value={this.state.employee.first_name}
-                    onChange={this.handleEmpInputChange}/>
+          <div className="form-row">
+            <div className="col-lg-3"><label>First Name</label></div>
+            <div className="col-lg-8">
+              <input type="text" className="form-control" placeholder="First Name"
+                      name = "first_name"
+                      value={this.state.employee.first_name}
+                      onChange={this.handleEmpInputChange}/>
+            </div>
           </div>
-          <div className="form-group">
-            <label>Last Name</label>
-            <input type="text" className="form-control" placeholder="Last Name"
-                    name = "last_name"
-                    value={this.state.employee.last_name}
-                    onChange={this.handleEmpInputChange}/>
+          <div className="form-row">
+            <div className="col-lg-3"><label>Last Name</label></div>
+            <div className="col-lg-8">
+               <input type="text" className="form-control" placeholder="Last Name"
+                      name = "last_name"
+                      value={this.state.employee.last_name}
+                      onChange={this.handleEmpInputChange}/>
+            </div>
           </div>
-          <div className="form-group">
-            <label>Gender</label>
-            <input type="text" className="form-control" placeholder="Gender"
-                    name = "gender"
-                    value={this.state.employee.gender}
-                    onChange={this.handleEmpInputChange}/>
+          <div className="form-row">
+            <div className="col-lg-3"><label>Gender</label></div>
+            <div className="col-lg-8">
+               <input type="text" className="form-control" placeholder="Gender"
+                      name = "gender"
+                      value={this.state.employee.gender}
+                      onChange={this.handleEmpInputChange}/>
+            </div>
           </div>
-          <div className="form-group">
-            <label>DOB</label>
-            <input type="date" className="form-control" placeholder="Date of Birth"
-                    name = "dob"
-                    value={this.state.employee.birth_date}
-                    onChange={this.handleEmpInputChange}/>
+          <div className="form-row">
+            <div className="col-lg-3"><label>Date of birth</label></div>
+            <div className="col-lg-8">
+              <input type="date" className="form-control" placeholder="Date of Birth"
+                      name = "dob"
+                      value={this.state.employee.birth_date}
+                      onChange={this.handleEmpInputChange}/>
+            </div>
           </div>
-          <div className="form-group">
-            <label>Hire Date</label>
-            <input type="date" className="form-control" placeholder="Hire Date"
-                    name = "hire_date"
-                    value={this.state.employee.hire_date}
-                    onChange={this.handleEmpInputChange}/>
+          <div className="form-row">
+            <div className="col-lg-3"><label>Title</label></div>
+            <div className="col-lg-8">
+              <input type="text" className="form-control" placeholder="Title"
+                      name = "title"
+                      value={this.state.employee.title}
+                      onChange={this.handleEmpInputChange}/>
+            </div>
           </div>
-          <div className="form-group">
-            <label>Title</label>
-            <input type="text" className="form-control" placeholder="Title"
-                    name = "title"
-                    value={this.state.employee.title}
-                    onChange={this.handleEmpInputChange}/>
+          <div className="form-row">
+            <div className="col-lg-3"><label>Hire Date</label></div>
+            <div className="col-lg-8">
+              <input type="date" className="form-control" placeholder="Hire Date"
+                      name = "hire_date"
+                      value={this.state.employee.hire_date}
+                      onChange={this.handleEmpInputChange}/>
+            </div>
           </div>
-          <div className="form-group">
-            <label>Department Number</label>
-            <input type="text" className="form-control" placeholder="Department Number"
-                    name = "dept_no"
-                    value={this.state.employee.dept_no}
-                    onChange={this.handleEmpInputChange}/>
+          <div className="form-row">
+            <div className="col-lg-3"><label>Department No</label></div>
+            <div className="col-lg-8">
+              <input type="text" className="form-control" placeholder="Department Number"
+                      name = "dept_no"
+                      value={this.state.employee.dept_no}
+                      onChange={this.handleEmpInputChange}/>
+            </div>
           </div>
-          <div className="form-group">
-            <label>Salary</label>
-            <input type="number" className="form-control" placeholder="Salary"
-                    name = "salary"
-                    value={this.state.employee.salary}
-                    onChange={this.handleEmpInputChange}/>
+
+          <div className="form-row">
+            <div className="col-lg-3"><label>Salary</label></div>
+            <div className="col-lg-8">
+              <input type="number" className="form-control" placeholder="Salary"
+                      name = "salary"
+                      value={this.state.employee.salary}
+                      onChange={this.handleEmpInputChange}/>
+            </div>
           </div>
-          <div className="form-group">
+
+          <div className="form-row">
+            <div className="col-lg-3"></div>
            {!this.state.update && 
-            <div>
+            <div className="col-lg-8">
               <button className="btn btn-primary btn-block" onClick={this.createEmployee}>Create</button>
               <p>New employee with id = {this.state.employee.emp_no} created</p>
               <p className="link" onClick={this.getEmployee}>View</p>
@@ -270,7 +299,7 @@ export default class extends Component {
     return (
       <div>
         <h1>Employee Dashboard</h1>
-        <div className="form" id="searchBox">
+        <div className="form" className="searchBox">
           <div className="form-group row">
             <div className="col-sm-10">
               <input type="number" className="form-control" 

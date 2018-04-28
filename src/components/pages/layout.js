@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
+import '../../style/Layout.css';
 
 class Layout extends Component {
 
@@ -32,7 +33,7 @@ class Layout extends Component {
 
   render() {
     return (
-      <div>
+      <div id="background">
         <header>
           <nav className="navbar navbar-expand-lg navbar-light" style={{'backgroundColor': '#e3f2fd'}}>
             <Link className="navbar-brand" to="/">Home</Link>

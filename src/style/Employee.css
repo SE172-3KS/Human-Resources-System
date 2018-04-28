@@ -2,14 +2,27 @@
 	color: blue;
 }
 
-.box {
-	display: inline;
-	float: left;
-	width: 50%;
+.form-row {
+	margin-top: 1em;
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
 }
 
-#searchBox {
+.searchBox {
 	width: 70%;
 	margin: auto;
+}
+
+.row {
+	margin-top: 1em;
+}
+
+button {
+	margin-right: 0.5em;
+}
+
+#title {
+	display: inline;
 }
 
