@@ -175,6 +175,12 @@ app.post('/api/getPayout', (request, response) => {
   });
 });
 
+app.get('/api/listPayouts', (request, response) => {
+  connection.query("Select * from payouts", (err, rows, fields) => {
+    response.json({payouts: rows});
+  });
+});
+
 app.get('*', function(request, response){
   response.sendFile(__dirname + '/build/index.html');
 });
