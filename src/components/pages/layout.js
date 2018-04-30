@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import '../../style/Layout.css';
+import Login from '../auth/login.js';
 
 class Layout extends Component {
 
@@ -23,8 +24,17 @@ class Layout extends Component {
           name: 'Payout',
           path: '/payout'
         }
-      ]
+      ],
+      user:null
     };
+    this.onAuthChange = this.onAuthChange.bind(this);
+  }
+
+  onAuthChange(state){
+    console.log("state change "+state);
+    if(state){
+      this.setState({user: state});
+    }else this.setState({user: null});
   }
 
   getNavStyle(path) {
@@ -41,23 +51,31 @@ class Layout extends Component {
         <header>
           <nav className="navbar navbar-expand-lg navbar-light" style={{'backgroundColor': '#e3f2fd'}}>
             <Link className="navbar-brand" to="/">Home</Link>
-            <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-              <div className="navbar-nav">
-                {
-                  this.state.routes.map((route, index) => {
-                    return <Link className={this.getNavStyle(route.path)} to={route.path} key={index}>{route.name}</Link>
-                  })
-                }
+            {
+              this.state.user &&
+              <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div className="navbar-nav">
+                  {
+                    this.state.routes.map((route, index) => {
+                      return <Link className={this.getNavStyle(route.path)} to={route.path} key={index}>{route.name}</Link>
+                    })
+                  }
+                </div>
               </div>
-            </div>
+            }
+            <Login user={this.state.user} onAuthChange={this.onAuthChange}></Login>
           </nav>
         </header>
 
-        <div className="container">
-          <div>
-            {this.props.children}
+        
+        {this.state.user && 
+          <div className="container">
+            <div>
+              {this.props.children}
+            </div>
           </div>
-        </div>
+        }
+        
       </div>
     )
   }
