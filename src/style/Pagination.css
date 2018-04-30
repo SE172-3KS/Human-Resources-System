@@ -1,0 +1,13 @@
+.reactable-pagination tr td {
+	text-align: center !important;
+}
+
+.reactable-page-button {
+	padding-right: 0.5em;
+	padding-left: 0.5em;
+}
+
+.reactable-current-page {
+	color: #62167a;
+}
+

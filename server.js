@@ -158,7 +158,7 @@ app.post('/api/makePayout', (request, response)=> {
           if (err) throw err
         });
 
-        response.json({message: "Payout batch id " + payout_batch_id});
+        response.json({message: payout_batch_id});
     }
   });
 });
