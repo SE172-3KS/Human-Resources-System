@@ -80,6 +80,7 @@ export default class extends Component {
       httpService.get({
         url: '/api/listEmployees'
       }).then(result => {
+        console.log(JSON.stringify(result.message));
         this.setState({message: result.message})
       })
     })
