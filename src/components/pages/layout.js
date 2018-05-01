@@ -31,7 +31,6 @@ class Layout extends Component {
   }
 
   onAuthChange(state){
-    console.log("state change "+state);
     if(state){
       this.setState({user: state});
     }else this.setState({user: null});
