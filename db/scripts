@@ -13,3 +13,6 @@ where salaries.to_date = latest_salaries.to_date
 and salaries.emp_no = latest_salaries.emp_no 
 and dept_emp.emp_no = latest_salaries.emp_no 
 and titles.emp_no = latest_salaries.emp_no;
+
+4/ Payouts table
+Create table payouts (batch_id varchar(20), batch_date date);
