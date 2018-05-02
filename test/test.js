@@ -4,16 +4,16 @@ let httpService = new HttpService();
 
 var assert = require('assert');
 describe('Database Tests', function() {
-    describe('List Employees', function() {
-        it('Message result should contain valid output', function() {
-            var req = httpService.get({
-                url: '/api/listEmployees'
-            });
-            /*.then(result => {
-                assert.notEqual(result, null);
-            });*/
-            console.log("REQ; ", req);
-            console.log("END");
-        });
+    var server;
+    beforeEach(function() {
+        server = require('../server');
     });
+    afterEach(function() {
+        server.close();
+    });
+
+    it('test1', function test1(done) {
+        request(server).get('/listEmployees').expect(200, done);
+    });
+
 });
