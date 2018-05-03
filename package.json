@@ -4,7 +4,7 @@
   "description": "(Team 3KS) Human Resources System - CMPE 172 SPRING 2018",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register --exit",
+    "test": "mocha js:babel-core/register --exit",
     "start": "node server.js",
     "build": "webpack"
   },
