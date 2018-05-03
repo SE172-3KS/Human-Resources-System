@@ -1,10 +1,13 @@
 import React from 'react';
 import OktaSignIn from '@okta/okta-signin-widget';
+import '../../style/Login.css';
+import Cookies from 'universal-cookie';
+let cookie = new Cookies();
 
 export default class Login extends React.Component{
-  constructor(){
-    super();
-    this.state = { user: null };
+  constructor(props){
+    super(props);
+    this.state = { user: this.props.user };
     this.widget = new OktaSignIn({
       baseUrl: 'https://dev-733769.oktapreview.com',
       clientId: '0oaeokpem8vNLSQDH0h7',
@@ -16,23 +19,30 @@ export default class Login extends React.Component{
   }
 
   componentDidMount(){
-    console.log('componentDidMount...');
     this.widget.session.get((response) => {
       if(response.status !== 'INACTIVE'){
-        this.setState({user:response.login});
+        this.setState({user:response});
+        this.props.onAuthChange(response);
+        cookie.set('userId', response.userId);
+        cookie.set('email', response.login);
       }else{
+        this.props.onAuthChange(null);
+        cookie.remove('userId');
+        cookie.remove('email')
         this.showLogin();
       }
     });
   }
 
   showLogin(){
-    console.log('showLogin...')
     Backbone.history.stop();
     this.widget.renderEl({el:this.loginContainer}, 
-      (response) => {        
+      (response) => {
         this.setState({user: response.claims.email});
+        this.props.onAuthChange(response.claims.email)
         this.widget.remove();
+        cookie.set('userId', response.claims.aud);
+        cookie.set('email', response.claims.email);
       },
       (err) => {
         console.log(err);
@@ -41,25 +51,26 @@ export default class Login extends React.Component{
   }
 
   logout(){
-    console.log('logout...');
     this.widget.signOut(() => {
       this.setState({user: null});
+      this.props.onAuthChange(null);
       this.showLogin();
+      cookie.remove('userId');
+      cookie.remove('email');
     });
   }
 
   render(){
-    console.log('rendering...');
     return(
       <div>
         {this.state.user ? (
-          <div className="container">
-            <div>Welcome, {this.state.user}!</div>
-            <button onClick={this.logout}>Logout</button>
+          <div>
+            <span>Welcome, {this.state.user.login}!</span>
+            <button className="btn btn-link" onClick={this.logout}>Logout</button>
           </div>
         ) : null}
         {this.state.user ? null : (
-          <div ref={(div) => {this.loginContainer = div; }} />
+          <div id="login" ref={(div) => {this.loginContainer = div; }} />
         )}
       </div>
     );
