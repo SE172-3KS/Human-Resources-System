@@ -17,7 +17,7 @@ import PayoutDetail from './components/pages/payoutDetail.js'
 ReactDOM.render(
   <Router history={browserHistory}>
     <Route path="/" component={Layout}>
-      <IndexRoute component={Home}/>
+      <IndexRoute component={Employees}/>
       <Route path="/login" component={Login}/>
       <Route path="/employees" component={Employees}/>
       <Route path="/charts" component={Charts}/>

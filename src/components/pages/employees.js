@@ -302,7 +302,7 @@ export default class extends Component {
         <div className="form" className="searchBox">
           <div className="form-group row">
             <div className="col-sm-10">
-              <input type="number" className="form-control" 
+              <input type="number" className="form-control" required 
                      name="id" placeholder="Employee Number"
                      values={this.state.id} onChange={this.handleInputChange}/>
             </div>
