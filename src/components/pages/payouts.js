@@ -36,21 +36,6 @@ export default class extends Component {
     });
   }
 
-  getPayoutDetail(id){
-  	console.log("Click");
-
-  	httpService.post({
-      url: '/api/getPayout',
-      body: {
-        id: id
-      }
-    }).then(result => {
-      if(result.message === "Success")
-        var payout = paypalService.extractPayoutResult(result.payout);
-        alert(JSON.stringify(payout));
-    });
-  }
-
   // <div className="form">
   //         <input type="number" className="form-control" placeholder="Payout Id"
   //                 name = "payoutId"
@@ -74,8 +59,12 @@ export default class extends Component {
             <Th column="batch_date">Date</Th>
           </Thead>
           {this.state.payouts.map((row) =>
-            <Tr id="myRow" key={row.batch_id} onClick={this.getPayoutDetail.bind(this, row.batch_id)}>
-              <Td column="batch_id">{row.batch_id}</Td>
+            <Tr id="myRow" key={row.batch_id}>
+              <Td column="batch_id">
+                <Link to={`payout/${row.batch_id}`}>
+                  {row.batch_id}
+                </Link>
+              </Td>
               <Td column="batch_date">{row.batch_date}</Td>
             </Tr>)
             }
