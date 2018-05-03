@@ -11,7 +11,7 @@ export default class Login extends React.Component{
     this.widget = new OktaSignIn({
       baseUrl: 'https://dev-733769.oktapreview.com',
       clientId: '0oaeqwuiyb7mjhYwT0h7',
-      redirectUri: 'http://ec2-34-207-95-54.compute-1.amazonaws.com:3000'
+      redirectUri: 'https://ec2-34-207-95-54.compute-1.amazonaws.com:3000'
     });
 
     this.showLogin = this.showLogin.bind(this);
