@@ -1,3 +1,6 @@
+import Cookies from 'universal-cookie';
+let cookie = new Cookies();
+
 export default class HttpService {
   constructor () {}
 
@@ -6,7 +9,8 @@ export default class HttpService {
       fetch(options.url, {
         body: JSON.stringify(options.body),
         headers: {
-          'content-type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + cookie.get("userId")
         },
         method: 'POST'
       }).then(response => {
@@ -21,7 +25,12 @@ export default class HttpService {
 
   get (options) {
     return new Promise((resolve, reject) => {
-      fetch(options.url).then(response => {
+      fetch(options.url, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + cookie.get("userId")
+        }
+      }).then(response => {
         return response.json()
       }).then(result => {
         resolve(result)
