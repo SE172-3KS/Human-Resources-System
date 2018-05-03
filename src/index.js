@@ -12,6 +12,7 @@ import Gender from './components/pages/gender.js';
 import Salary from './components/pages/salary.js';
 import Payment from './components/pages/payment.js';
 import Payout from './components/pages/payouts.js';
+import PayoutDetail from './components/pages/payoutDetail.js'
 
 
 ReactDOM.render(
@@ -24,6 +25,7 @@ ReactDOM.render(
       <Route path="/salary" component={Salary}/>
       <Route path="/payment" component={Payment}/>
       <Route path="/payout" component={Payout}/>
+      <Route path="/payout/:id" component={PayoutDetail}/>
     </Route>
   </Router>,
   document.getElementById('root')

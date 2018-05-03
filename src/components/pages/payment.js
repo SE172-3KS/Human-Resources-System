@@ -17,7 +17,8 @@ export default class extends Component {
       payout: null,
       employees: [],
       receipients: [],
-      payoutId: ""
+      payoutId: "",
+      amount:0
     };
     this.handleInputChange = this.handleInputChange.bind(this);
   }
@@ -55,7 +56,8 @@ export default class extends Component {
     }
 
     var receiver = row.first_name + "."+row.emp_no+"."+row.last_name+"@fakecompany.com";
-    receipients.push({id: row.emp_no, receiver: receiver, value: 0});
+    var amount = this.state.amount/100; //divide by hundred because api funding is limited 
+    receipients.push({id: row.emp_no, receiver: receiver, value: amount}); 
     this.setState({receipients: receipients});
   }
 
@@ -77,38 +79,29 @@ export default class extends Component {
     });
   }
 
-  getPayoutDetail(){
-
-    var id = this.state.payoutId;
-
-    httpService.post({
-      url: '/api/getPayout',
-      body: {
-        id: id
-      }
-    }).then(result => {
-      if(result.message === "Success")
-        var payout = paypalService.extractPayoutResult(result.payout);
-       // this.setState({payout: payout});
-        alert(JSON.stringify(payout));
-    });
-  }
-
   render() {
     return (
       <div>
         <h1>Payments</h1>
         <p id="lastPayout">Last Payout Id: {this.state.payoutId ? this.state.payoutId : "None"}</p>
-        <button className="btn btn-primary" 
-                onClick={this.sendPayout.bind(this)}>
-                Send Payouts
-        </button>
 
-          { this.state.payoutId && 
-            <button className="btn btn-success" 
-                    onClick={this.getPayoutDetail.bind(this)}>
-                    View Last Payout Detail
-            </button>
+        <div className="form-inline">
+          <div className="form-group mb-2">
+            <label className="mr-2">Amount</label>
+            <input type="number" className="mr-2" name="amount" 
+                    value={this.state.amount} placeholder="Payout Amount"
+                    onChange={this.handleInputChange}/>
+          </div>
+          <button className="btn btn-primary" 
+                  onClick={this.sendPayout.bind(this)}>
+                  Send Payouts
+          </button>
+        </div>
+
+        { this.state.payoutId && 
+          <button className="btn btn-success">
+            <Link id="white" to={`payout/${this.state.payoutId}`}>View Last Payout Detail</Link>
+          </button>
         }
 
         <hr></hr>
