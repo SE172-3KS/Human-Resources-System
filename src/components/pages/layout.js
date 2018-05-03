@@ -14,13 +14,10 @@ class Layout extends Component {
           path: '/employees'
         },
         {
-          name: 'Gender',
-          path: '/gender'
+          name: 'Charts',
+          path: '/charts'
         },
         {
-          name: 'Salary',
-          path: '/salary'
-        },{
           name: 'Payment',
           path: '/payment'
         }
