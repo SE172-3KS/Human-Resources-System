@@ -1,0 +1,16 @@
+---
+- hosts: aws
+  become_user: ubuntu
+  tasks:
+    - name: Install Forever for Node.js
+      npm: name=forever global=yes state=present
+
+    - name: Check Node.js apps running
+      command: forever list
+      register: forever_list
+      changed_when: false
+
+    - name: Start Node server
+      shell: /home/ubuntu/Human-Resources-System/start.sh
+      when: forever_list.stdout.find('/home/ubuntu/Human-Resources-System/server.js') == -1
+...
