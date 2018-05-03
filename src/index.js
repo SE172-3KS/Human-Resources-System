@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, browserHistory, IndexRoute} from 'react-router';
-import TableauReport from 'tableau-react';
-import tableau from "tableau-api";
 
 import Home from './components/pages/home.js';
 import Layout from './components/pages/layout.js';
-import Employees from './components/pages/employeesTest.js';
+import Employees from './components/pages/employees.js';
 import Login from './components/auth/login';
 import Gender from './components/pages/gender.js';
 import Salary from './components/pages/salary.js';
