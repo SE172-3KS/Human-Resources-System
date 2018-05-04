@@ -2,6 +2,7 @@ import React from 'react';
 import OktaSignIn from '@okta/okta-signin-widget';
 import '../../style/Login.css';
 import Cookies from 'universal-cookie';
+import {browserHistory} from 'react-router';
 let cookie = new Cookies();
 
 export default class Login extends React.Component{
@@ -43,6 +44,7 @@ export default class Login extends React.Component{
         this.widget.remove();
         cookie.set('userId', response.claims.aud);
         cookie.set('email', response.claims.email);
+        browserHistory.push("/")
       },
       (err) => {
         console.log(err);

@@ -249,11 +249,11 @@ app.listen(PORT, function(error){
 });
 
 function isUserAuthorized (token) {
-  let uid = token.replace('Bearer ', '');
-  console.log(uid);
+  let email = token.replace('Bearer ', '');
+  console.log(email);
 
   return new Promise((resolve, reject) => {
-    http.get('https://dev-733769.oktapreview.com/api/v1/users/' + uid, {
+    http.get('https://dev-733769.oktapreview.com/api/v1/users/' + email, {
       headers: {
         Authorization: 'SSWS 00q1JOGG8DaPbDnWI-POcRskpI4lrRJ9lNUot4LIX1'
       }

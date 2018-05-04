@@ -42,7 +42,7 @@ export default class HttpService {
 }
 
 function getAuthorization () {
-  let bearer = 'Bearer ' + cookie.get("userId");
+  let bearer = 'Bearer ' + cookie.get("email");
   console.log(bearer)
   return bearer
 }
