@@ -67,7 +67,7 @@ export default class Login extends React.Component{
       <div>
         {this.state.user ? (
           <div>
-            <span>Welcome, {this.state.user.login}!</span>
+            <span>Welcome, {this.state.user.login ? this.state.user.login : this.state.user}!</span>
             <button className="btn btn-link" onClick={this.logout}>Logout</button>
           </div>
         ) : null}

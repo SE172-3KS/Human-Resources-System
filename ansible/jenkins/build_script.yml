@@ -1,0 +1,11 @@
+---
+- hosts: aws
+  become: true
+  tasks:
+    - name: Update the Jenkins build script
+      copy:
+        src: ./npm_build.sh
+        dest: /var/lib/jenkins/jobs/Autodeploy/workspace/npm_build.sh
+        owner: jenkins
+        mode: u=rwx
+...

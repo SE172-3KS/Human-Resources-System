@@ -1,0 +1,7 @@
+---
+- hosts: aws
+  become: true
+  tasks:
+    - name: Stop Node server
+      command: killall node
+...
