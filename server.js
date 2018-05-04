@@ -258,10 +258,8 @@ function isUserAuthorized (token) {
         Authorization: 'SSWS 00q1JOGG8DaPbDnWI-POcRskpI4lrRJ9lNUot4LIX1'
       }
     }).then(response => {
-      console.log(response.data);
       resolve({status: response.data.status === 'ACTIVE' ? 1 : 0})
     }).catch(err => {
-      console.log(err.response.data);
       reject({status: -1, msg: err.response.data.errorSummary})
     });
   });
