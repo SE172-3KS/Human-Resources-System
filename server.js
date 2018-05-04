@@ -10,6 +10,7 @@ let PORT = process.env.PORT || 3000;
 let mysql = require('mysql');
 let paypal = require('paypal-rest-sdk');
 let axios = require('axios');
+let http = axios.create();
 
 if(process.env.NODE_ENV !== 'production') {
   let webpackDevMiddleware = require('webpack-dev-middleware');
@@ -68,7 +69,9 @@ app.post('/api/getEmployee', (request, response) => {
           if(err) throw err
           var moreInfo = rows[rows.length-1];
           var info = Object.assign({}, generalInfo, moreInfo);
-          response.json({message: info});
+          if(Object.keys(info).length != 0)
+            response.json({message: info});
+          else response.json({message: null});
         });
       });
     } else {
@@ -86,7 +89,7 @@ app.post('/api/createEmployee', (request, response) => {
 
       var query = "Insert into employees values ("
         +emp.emp_no+", '"
-        +emp.dob+"','"
+        +emp.birth_date+"','"
         +emp.first_name+"','"
         +emp.last_name+"','"
         +emp.gender+"','"
@@ -251,18 +254,18 @@ let server = https.createServer({
 server.listen(PORT);
 
 function isUserAuthorized (token) {
-  let uid = token.replace('Bearer ', '');
+  let email = token.replace('Bearer ', '');
+  console.log(email);
 
   return new Promise((resolve, reject) => {
-    axios({
-      url: 'https://dev-733769.oktapreview.com/api/v1/users/' + uid,
+    http.get('https://dev-733769.oktapreview.com/api/v1/users/' + email, {
       headers: {
         Authorization: 'SSWS 00q1JOGG8DaPbDnWI-POcRskpI4lrRJ9lNUot4LIX1'
       }
     }).then(response => {
       resolve({status: response.data.status === 'ACTIVE' ? 1 : 0})
     }).catch(err => {
-      reject({status: -1, msg: err.data.errorSummary})
+      reject({status: -1, msg: err.response.data.errorSummary})
     });
   });
 }

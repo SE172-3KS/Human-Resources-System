@@ -10,7 +10,7 @@ export default class HttpService {
         body: JSON.stringify(options.body),
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + cookie.get("userId")
+          'Authorization': getAuthorization()
         },
         method: 'POST'
       }).then(response => {
@@ -28,7 +28,7 @@ export default class HttpService {
       fetch(options.url, {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + cookie.get("userId")
+          'Authorization': getAuthorization()
         }
       }).then(response => {
         return response.json()
@@ -39,4 +39,10 @@ export default class HttpService {
       })
     })
   }
+}
+
+function getAuthorization () {
+  let bearer = 'Bearer ' + cookie.get("email");
+  console.log(bearer)
+  return bearer
 }
