@@ -65,7 +65,9 @@ app.post('/api/getEmployee', (request, response) => {
           if(err) throw err
           var moreInfo = rows[rows.length-1];
           var info = Object.assign({}, generalInfo, moreInfo);
-          response.json({message: info});
+          if(Object.keys(info).length != 0)
+            response.json({message: info});
+          else response.json({message: null});
         });
       });
     } else {

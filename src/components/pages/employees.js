@@ -99,8 +99,10 @@ export default class extends Component {
         id: id
       }
     }).then(result => {
-      console.log(JSON.stringify(result.message));
+      console.log("hi " + JSON.stringify(result.message));
       this.setState({message: result.message, newEmployee: false})
+      if(result.message == null)
+        alert("Employee does not exist");
     })
   }
 
