@@ -65,7 +65,7 @@ export default class extends Component {
         employee.dept_no = value;
         break;
       case 'dob':
-        employee.dob = value;
+        employee.birth_date = value;
         break;
     }
 
@@ -286,8 +286,7 @@ export default class extends Component {
            {!this.state.update && 
             <div className="col-lg-8">
               <button className="btn btn-primary btn-block" onClick={this.createEmployee}>Create</button>
-              <p>New employee with id = {this.state.employee.emp_no} created</p>
-              <p className="link" onClick={this.getEmployee}>View</p>
+              <p className="link" onClick={this.getEmployee}>View new employee</p>
             </div>
             }
            {this.state.update && <button className="btn btn-primary btn-block" onClick={this.updateEmployee}>Update</button>}

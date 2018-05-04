@@ -83,7 +83,7 @@ app.post('/api/createEmployee', (request, response) => {
 
       var query = "Insert into employees values ("
         +emp.emp_no+", '"
-        +emp.dob+"','"
+        +emp.birth_date+"','"
         +emp.first_name+"','"
         +emp.last_name+"','"
         +emp.gender+"','"
