@@ -25,7 +25,11 @@ describe('Database Tests', function () {
       });
     });
     it('retrieve payouts from server', function (done) {
-      http.get('http://localhost:3000/api/listPayouts').then((data) => {
+      http.get('http://localhost:3000/api/listPayouts', {
+        headers: {
+          Authorization: 'Bearer ' + "00ueldryxvVgWZI0X0h7"
+        }
+      }).then((data) => {
         done()
       }).catch(err => {
         done(err)

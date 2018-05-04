@@ -22,7 +22,7 @@ export default class Login extends React.Component{
     this.widget.session.get((response) => {
       if(response.status !== 'INACTIVE'){
         this.setState({user:response});
-        this.props.onAuthChange(response);
+        this.props.onAuthChange(response.login);
         cookie.set('userId', response.userId);
         cookie.set('email', response.login);
       }else{
@@ -38,8 +38,8 @@ export default class Login extends React.Component{
     Backbone.history.stop();
     this.widget.renderEl({el:this.loginContainer}, 
       (response) => {
-        this.setState({user: response.claims.email});
-        this.props.onAuthChange(response.claims.email)
+        this.setState({user: {login: response.claims.email}});
+        this.props.onAuthChange(response.claims.email);
         this.widget.remove();
         cookie.set('userId', response.claims.aud);
         cookie.set('email', response.claims.email);

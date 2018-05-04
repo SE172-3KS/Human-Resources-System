@@ -6,6 +6,7 @@ let PORT = process.env.PORT || 3000;
 let mysql = require('mysql');
 let paypal = require('paypal-rest-sdk');
 let axios = require('axios');
+let http = axios.create();
 
 if(process.env.NODE_ENV !== 'production') {
   let webpackDevMiddleware = require('webpack-dev-middleware');
@@ -249,17 +250,19 @@ app.listen(PORT, function(error){
 
 function isUserAuthorized (token) {
   let uid = token.replace('Bearer ', '');
+  console.log(uid);
 
   return new Promise((resolve, reject) => {
-    axios({
-      url: 'https://dev-733769.oktapreview.com/api/v1/users/' + uid,
+    http.get('https://dev-733769.oktapreview.com/api/v1/users/' + uid, {
       headers: {
         Authorization: 'SSWS 00q1JOGG8DaPbDnWI-POcRskpI4lrRJ9lNUot4LIX1'
       }
     }).then(response => {
+      console.log(response.data);
       resolve({status: response.data.status === 'ACTIVE' ? 1 : 0})
     }).catch(err => {
-      reject({status: -1, msg: err.data.errorSummary})
+      console.log(err.response.data);
+      reject({status: -1, msg: err.response.data.errorSummary})
     });
   });
 }
