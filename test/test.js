@@ -24,27 +24,5 @@ describe('Database Tests', function () {
         assert.equal(err, null);
       });
     });
-    it('retrieve payouts from server', function (done) {
-      http.get('http://localhost:3000/api/listPayouts', {
-        headers: {
-          Authorization: 'Bearer ' + "seling.chenn@gmail.com"
-        }
-      }).then((data) => {
-        done()
-      }).catch(err => {
-        done(err)
-      })
-    })
-    it('retrieve employees from server', function (done) {
-      http.get('http://localhost:3000/api/listEmployees', {
-        headers: {
-          Authorization: 'Bearer ' + "seling.chenn@gmail.com"
-        }
-      }).then((data) => {
-        done()
-      }).catch(err => {
-        done(err)
-      })
-    })
   });
 });
