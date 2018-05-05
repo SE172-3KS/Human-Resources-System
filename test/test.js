@@ -30,6 +30,7 @@ describe('Database Tests', function () {
           Authorization: 'Bearer ' + "seling.chenn@gmail.com"
         }
       }).then((data) => {
+        assert.equal(data.status,200)
         done()
       }).catch(err => {
         done(err)
@@ -41,6 +42,19 @@ describe('Database Tests', function () {
           Authorization: 'Bearer ' + "seling.chenn@gmail.com"
         }
       }).then((data) => {
+        assert.equal(data.status,200)
+        done()
+      }).catch(err => {
+        done(err)
+      })
+    })
+    it('testing getEmployees', function (done) {
+      http.get('http://localhost:3000/api/getEmployees', {
+        headers: {
+          Authorization: 'Bearer ' + "seling.chenn@gmail.com"
+        }
+      }).then((data) => {
+        assert.equal(data.status,200)
         done()
       }).catch(err => {
         done(err)
