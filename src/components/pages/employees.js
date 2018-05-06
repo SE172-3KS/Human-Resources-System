@@ -299,7 +299,7 @@ export default class extends Component {
 
     return (
       <div>
-        <h1>Employee Dashboard</h1>
+        <h1>Employee Dashboard hello world</h1>
         <div className="form" className="searchBox">
           <div className="form-group row">
             <div className="col-sm-10">
