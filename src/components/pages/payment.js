@@ -56,9 +56,10 @@ export default class extends Component {
     }
 
     var receiver = row.first_name + "."+row.emp_no+"."+row.last_name+"@fakecompany.com";
-    var amount = this.state.amount/100; //divide by hundred because api funding is limited 
+    var amount = this.state.amount/100.0; //divide by hundred because api funding is limited 
     receipients.push({id: row.emp_no, receiver: receiver, value: amount}); 
     this.setState({receipients: receipients});
+    console.log(JSON.stringify(receipients));
   }
 
   sendPayout(){
